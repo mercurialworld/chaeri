@@ -2,10 +2,13 @@ import * as cdk from "aws-cdk-lib";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
-import { GithubActionsIdentityProvider } from "aws-cdk-github-oidc";
+import {
+    GithubActionsIdentityProvider,
+    GithubActionsRole,
+} from "aws-cdk-github-oidc";
 
 export class ChaeriStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, props: ChaeriStackProps) {
         super(scope, id, props);
 
         const provider = new GithubActionsIdentityProvider(this, "GithubProvider");
@@ -23,6 +26,27 @@ export class ChaeriStack extends cdk.Stack {
         });
         artifactsBucket.grantRead(instanceRole);
 
+        const cdkRoleProxy = iam.Role.fromRoleArn(
+            this,
+            "CDKRoleProxy",
+            `arn:aws:iam::${this.account}:role/cdk-*`,
+        );
+
+        props.repos.forEach(({ owner, repo, githubEnv }) => {
+            const role = new GithubActionsRole(
+                this,
+                `ActionsCDKRole/${owner}/${repo}`,
+                {
+                    provider,
+                    owner,
+                    repo,
+                    filter: `environment:${githubEnv}`,
+                    roleName: `ActionsCDK@${owner}+${repo}`,
+                },
+            );
+            cdkRoleProxy.grantAssumeRole(role);
+        });
+
         new cdk.CfnOutput(this, "CodeDeployArtifactsBucketName", {
             value: artifactsBucket.bucketName,
         });
@@ -36,4 +60,5 @@ interface ChaeriStackProps extends cdk.StackProps {
 interface GitHubRepository {
     owner: string;
     repo: string;
+    githubEnv: string;
 }
