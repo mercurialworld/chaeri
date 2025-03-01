@@ -1,16 +1,39 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import * as iam from "aws-cdk-lib/aws-iam";
+import * as s3 from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
+import { GithubActionsIdentityProvider } from "aws-cdk-github-oidc";
 
 export class ChaeriStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+        super(scope, id, props);
 
-    // The code that defines your stack goes here
+        const provider = new GithubActionsIdentityProvider(this, "GithubProvider");
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'ChaeriQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+        const instanceUser = new iam.User(this, "OracleCodeDeployInstanceUser");
+
+        const instanceRole = new iam.Role(this, "OracleCodeDeployInstanceRole", {
+            assumedBy: instanceUser,
+        });
+        instanceRole.grantAssumeRole(instanceUser);
+
+        const artifactsBucket = new s3.Bucket(this, "CodeDeployArtifacts", {
+            bucketName: "chaeri-codedeploy-artifacts",
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
+        });
+        artifactsBucket.grantRead(instanceRole);
+
+        new cdk.CfnOutput(this, "CodeDeployArtifactsBucketName", {
+            value: artifactsBucket.bucketName,
+        });
+    }
+}
+
+interface ChaeriStackProps extends cdk.StackProps {
+    repos: GitHubRepository[];
+}
+
+interface GitHubRepository {
+    owner: string;
+    repo: string;
 }

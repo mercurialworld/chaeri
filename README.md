@@ -1,14 +1,8 @@
-# Welcome to your CDK TypeScript project
+# CI
 
-This is a blank project for CDK development with TypeScript.
+My personal CI files.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+# Reference
 
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+- [object-Object/ci](https://github.com/object-Object/ci)
+- [object-Object/objectobject.ca](https://github.com/object-Object/objectobject.ca)
