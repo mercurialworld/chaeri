@@ -6,6 +6,11 @@ import {
     GithubActionsIdentityProvider,
     GithubActionsRole,
 } from "aws-cdk-github-oidc";
+import { GitHubRepository } from "./types";
+
+interface ChaeriStackProps extends cdk.StackProps {
+    repos: GitHubRepository[];
+}
 
 export class ChaeriStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: ChaeriStackProps) {
@@ -51,14 +56,4 @@ export class ChaeriStack extends cdk.Stack {
             value: artifactsBucket.bucketName,
         });
     }
-}
-
-interface ChaeriStackProps extends cdk.StackProps {
-    repos: GitHubRepository[];
-}
-
-interface GitHubRepository {
-    owner: string;
-    repo: string;
-    githubEnv: string;
 }
