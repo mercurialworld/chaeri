@@ -1,0 +1,37 @@
+name: Setup AWS
+description: Sets up AWS roles. Mainly for my own CI/CD setups.
+
+inputs:
+  role-to-assume:
+    description: AWS IAM role to assume when setting up AWS credentials. 
+    required: true
+  aws-region:
+    description: AWS region.
+    required: false
+    default: us-east-1
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve inputs.role_to_assume
+      id: resolve-role
+      shell: bash
+      run: |
+        case '${{ inputs.role-to-assume }}' in
+          repo)
+            echo 'Using per-repo role'
+            repo="$(echo '${{ github.repository }}' | tr '/' '+')"
+            role="arn:aws:iam::575108959833:role/ActionsCDK@${repo}"
+            ;;
+          *)
+            role='${{ inputs.role-to-assume }}'
+            ;;
+        esac
+        echo "Role ARN: ${role}"
+        echo "role=${role}" >> "$GITHUB_OUTPUT"
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.aws-region }}
+        role-to-assume: ${{ steps.resolve-role.outputs.role }}

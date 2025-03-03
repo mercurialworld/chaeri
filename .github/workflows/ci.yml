@@ -1,0 +1,77 @@
+name: 🅱️uild and 🅱️eploy
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  build-aws-cdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🅱️heckout
+        uses: actions/checkout@v4
+
+      - name: 🅱️etup 🅱️ode
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🅱️nstall 🅱️PM 🅱️ackages
+        shell: bash
+        run: npm ci
+      
+      - name: 🅱️ynth 🅱️WS-🅱️DK 🅱️tack
+        run: cdk synth --ci --no-lookups --strict
+
+      - name: 🅱️pload 🅱️ynth 🅱️rtifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aws-cdk-synth
+          path: cdk.out
+  
+  deploy-aws-cdk:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || inputs.deploy
+    needs:
+      - build-aws-cdk
+    permissions:
+      contents: read  # gotta make sure
+      id-token: write # for OIDC auth
+    environment:
+      name: aws-cdk
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🅱️heckout
+        uses: actions/checkout@v4
+
+      - name: 🅱️etup 🅱️ode
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🅱️nstall 🅱️PM 🅱️ackages
+        shell: bash
+        run: npm ci
+      
+      - name: 🅱️etup 🅱️WS 🅱️ole
+        uses: ./setup-aws
+        with: 
+          role-to-assume: repo
+      
+      - name: 🅱️ownload 🅱️ynth 🅱️rtifact
+        uses: actions/download-artifact@v4
+        with:
+          name: aws-cdk-synth
+          path: cdk.out
+      
+      - name: 🅱️eploy 🅱️tack
+        run: cdk deploy --ci --no-lookups --require-approval=never --app=cdk.out
