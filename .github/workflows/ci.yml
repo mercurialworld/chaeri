@@ -31,7 +31,7 @@ jobs:
         run: npm ci
       
       - name: 🅱️ynth 🅱️WS-🅱️DK 🅱️tack
-        run: cdk synth --ci --no-lookups --strict
+        run: npx cdk synth --ci --no-lookups --strict
 
       - name: 🅱️pload 🅱️ynth 🅱️rtifact
         uses: actions/upload-artifact@v4
@@ -74,4 +74,4 @@ jobs:
           path: cdk.out
       
       - name: 🅱️eploy 🅱️tack
-        run: cdk deploy --ci --no-lookups --require-approval=never --app=cdk.out
+        run: npx cdk deploy --ci --no-lookups --require-approval=never --app=cdk.out
