@@ -1,0 +1,11 @@
+name: Parse CDK outputs
+description: Parse an AWS CDK outputs.json file for use in further steps. Fails if more than one stack's outputs are in the file.
+
+inputs:
+  file:
+    description: File to parse.
+    required: true
+
+runs:
+  using: node20
+  main: ../dist/parse-cdk/index.js

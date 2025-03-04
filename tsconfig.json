@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
     ],
-    "declaration": true,
+    // "declaration": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -22,10 +23,12 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "outDir": "./dist"
   },
   "exclude": [
     "node_modules",
-    "cdk.out"
+    "cdk.out",
+    "dist"
   ]
 }

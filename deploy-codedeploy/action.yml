@@ -1,0 +1,32 @@
+name: Deploy to CodeDeploy
+description: Deploys a CodeDeploy application.
+
+inputs:
+  path:
+    description: Path to the directory containing the appspec.yml file. Should not include a trailing slash.
+    required: true
+  stack:
+    description: AWS stack name of the CodeDeploy application.
+    required: true
+  application:
+    description: CodeDeploy application name.
+    required: true
+  deployment-group:
+    description: CodeDeploy deployment group name.
+    required: true
+
+outputs:
+  s3-key:
+    description: S3 key of the uploaded deployment bundle.
+    value: ${{ steps.upload-bundle.outputs.s3-key }}
+  deployment-id:
+    description: Deployment id.
+    value: ${{ steps.create-deployment.outputs.deployment-id }}
+  deployment-url:
+    description: AWS console URL for the deployment.
+    value: ${{ steps.create-deployment.outputs.deployment-url }}
+
+runs:
+  using: node20
+  main: ../dist/deploy-codedeploy/index.js
+
