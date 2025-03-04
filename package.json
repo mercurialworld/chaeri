@@ -4,6 +4,7 @@
   "bin": {
     "chaeri": "bin/chaeri.js"
   },
+  "files": ["bin/*", "lib/*"],
   "private": true,
   "scripts": {
     "build": "tsc",
