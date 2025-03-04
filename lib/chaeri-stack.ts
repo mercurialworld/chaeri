@@ -6,10 +6,10 @@ import {
     GithubActionsIdentityProvider,
     GithubActionsRole,
 } from "aws-cdk-github-oidc";
-import { GitHubRepository } from "./types";
+import { GitHubEnvRepository } from "./types";
 
 interface ChaeriStackProps extends cdk.StackProps {
-    repos: GitHubRepository[];
+    repos: GitHubEnvRepository[];
 }
 
 export class ChaeriStack extends cdk.Stack {

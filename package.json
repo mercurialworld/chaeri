@@ -4,7 +4,8 @@
   "bin": {
     "chaeri": "bin/chaeri.js"
   },
-  "files": ["bin/*", "lib/*"],
+  "files": ["lib/**"],
+  "main": "lib/index.ts",
   "private": true,
   "scripts": {
     "build": "tsc",

@@ -10,6 +10,7 @@ import * as cdk from "aws-cdk-lib";
 
 export interface CodeDeployAppProps {
     githubRepo: GitHubRepository;
+    codedeployGitHubEnv: string;
     onPremInstanceTag: string;
 }
 
@@ -47,7 +48,7 @@ export class CodeDeployApp extends Construct {
             owner: props.githubRepo.owner,
             repo: props.githubRepo.repo,
             provider: oidcProxy,
-            filter: `environment:${props.githubRepo.githubEnv}`,
+            filter: `environment:${props.codedeployGitHubEnv}`,
         });
 
         actionsRole.addToPolicy(
