@@ -4,8 +4,8 @@
   "bin": {
     "chaeri": "bin/chaeri.js"
   },
-  "files": ["lib/**"],
-  "main": "lib/index.ts",
+  "files": ["dist/lib/**"],
+  "main": "dist/lib/index.js",
   "private": true,
   "scripts": {
     "prepare": "npm run build",
