@@ -1,6 +1,6 @@
 {
   "name": "chaeri",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "bin": {
     "chaeri": "bin/chaeri.js"
   },
@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc",
+    "build": "tsc --declaration",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
