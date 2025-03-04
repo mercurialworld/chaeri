@@ -8,6 +8,7 @@
   "main": "lib/index.ts",
   "private": true,
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
