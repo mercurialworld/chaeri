@@ -24,7 +24,9 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "outDir": "./dist/lib/"
+    "outDir": "./dist/lib/",
+    "importHelpers": true,
+    "allowJs": true
   },
   "include": [
     "lib/**.ts"
