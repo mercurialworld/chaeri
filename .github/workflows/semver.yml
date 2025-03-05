@@ -1,0 +1,15 @@
+name: Release actions
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  update-semver:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: object-Object/action-update-semver@v1.2.1-fix
