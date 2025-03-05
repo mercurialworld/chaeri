@@ -65,14 +65,17 @@ export class CodeDeployApp extends Construct {
         // outputs
 
         new cdk.CfnOutput(this, "ApplicationName", {
+            key: "ApplicationName",
             value: application.applicationName,
         });
 
         new cdk.CfnOutput(this, "DeploymentGroupName", {
+            key: "DeploymentGroupName",
             value: deploymentGroup.deploymentGroupName,
         });
 
         new cdk.CfnOutput(this, "ActionsCodeDeployRoleARN", {
+            key: "ActionsCodeDeployRoleARN",
             value: actionsRole.roleArn,
         });
     }
