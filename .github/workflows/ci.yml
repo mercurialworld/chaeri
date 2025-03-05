@@ -63,7 +63,7 @@ jobs:
         run: npm ci
       
       - name: 🅱️etup 🅱️WS 🅱️ole
-        uses: ./setup-aws
+        uses: mercurialworld/chaeri-actions/setup-aws@v1
         with: 
           role-to-assume: repo
       
