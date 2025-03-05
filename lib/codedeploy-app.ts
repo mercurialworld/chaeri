@@ -1,6 +1,7 @@
 import { Construct } from "constructs";
 import * as codedeploy from "aws-cdk-lib/aws-codedeploy";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as s3 from "aws-cdk-lib/aws-s3";
 import {
     GithubActionsIdentityProvider,
     GithubActionsRole,
@@ -44,12 +45,20 @@ export class CodeDeployApp extends Construct {
             "GithubOIDCProviderProxy",
         );
 
+        const artifactsBucketProxy = s3.Bucket.fromBucketName(
+            this,
+            "ArtifactsBucketProxy",
+            "chaeri-codedeploy-artifacts",
+        );
+
         const actionsRole = new GithubActionsRole(this, "ActionsCodeDeployRole", {
             owner: props.githubRepo.owner,
             repo: props.githubRepo.repo,
             provider: oidcProxy,
             filter: `environment:${props.codedeployGitHubEnv}`,
         });
+
+        artifactsBucketProxy.grantReadWrite(actionsRole);
 
         actionsRole.addToPolicy(
             new iam.PolicyStatement({
