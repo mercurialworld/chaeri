@@ -9,3 +9,14 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+      day: "tuesday"
+      time: "01:30"
+      timezone: "UTC"
+    groups:
+      aws-cdk-deps:
+        applies-to: version-updates
+        patterns: 
+          - "*aws*"
+        update-types:
+          - "patch"
+          - "minor"
