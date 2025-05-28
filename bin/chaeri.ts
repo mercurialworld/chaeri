@@ -8,5 +8,6 @@ new ChaeriStack(app, "ChaeriStack", {
     repos: [
         { owner: "mercurialworld", repo: "chaeri", githubEnv: "aws-cdk" },
         { owner: "mercurialworld", repo: "mafuyu", githubEnv: "aws-cdk" },
+        { owner: "mercurialworld", repo: "pochasite", githubEnv: "aws-cdk" },
     ],
 });
