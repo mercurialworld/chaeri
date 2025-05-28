@@ -1,37 +1,37 @@
 {
-  "name": "chaeri",
-  "version": "0.2.3",
-  "files": [
-    "dist/**",
-    "lib/**"
-  ],
-  "main": "dist/index.js",
-  "private": true,
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
-  },
-  "devDependencies": {
-    "@aws-sdk/client-codedeploy": "^3.777.0",
-    "@eslint/js": "^9.23.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "22.13.17",
-    "aws-cdk": "2.1006.0",
-    "eslint": "^9.23.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.5.3",
-    "ts-jest": "^29.3.1",
-    "typescript-eslint": "^8.29.0"
-  },
-  "dependencies": {
-    "aws-cdk-github-oidc": "^2.4.1",
-    "aws-cdk-lib": "2.187.0",
-    "constructs": "^10.4.2",
-    "ts-node": "^10.9.2",
-    "tslib": "^2.8.1",
-    "typescript": "~5.8.2"
-  }
+    "name": "chaeri",
+    "version": "0.2.3",
+    "files": [
+        "dist/**",
+        "lib/**"
+    ],
+    "main": "dist/index.js",
+    "private": true,
+    "scripts": {
+        "prepare": "npm run build",
+        "build": "tsc",
+        "watch": "tsc -w",
+        "test": "jest",
+        "cdk": "cdk"
+    },
+    "devDependencies": {
+        "@aws-sdk/client-codedeploy": "^3.777.0",
+        "@eslint/js": "^9.23.0",
+        "@types/jest": "^29.5.14",
+        "@types/node": "22.13.17",
+        "aws-cdk": "^2.1016.1",
+        "eslint": "^9.23.0",
+        "jest": "^29.7.0",
+        "prettier": "^3.5.3",
+        "ts-jest": "^29.3.1",
+        "typescript-eslint": "^8.29.0"
+    },
+    "dependencies": {
+        "aws-cdk-github-oidc": "^2.4.1",
+        "aws-cdk-lib": "^2.199.0",
+        "constructs": "^10.4.2",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.8.1",
+        "typescript": "~5.8.2"
+    }
 }
