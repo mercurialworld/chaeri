@@ -1,18 +1,11 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "importHelpers": true,
-    "outDir": "./dist/",
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "cdk.out",
-    "dist"
-  ],
-  "include": [
-    "lib/**.ts"
-  ]
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "importHelpers": true,
+        "outDir": "./dist/",
+        "typeRoots": ["./node_modules/@types"],
+        "types": ["node"]
+    },
+    "exclude": ["node_modules", "cdk.out", "dist"],
+    "include": ["lib/**.ts"]
 }
