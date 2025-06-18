@@ -2,7 +2,8 @@
 
 My personal CI files.
 
-All actions have been moved to [chaeri-actions](https://github.com/mercurialworld/chaeri-actions).
+Actions are at [chaeri-actions](https://github.com/mercurialworld/chaeri-actions).
+Template is at [chaeri-template](https://github.com/mercurialworld/chaeri-template).
 
 # Reference
 
