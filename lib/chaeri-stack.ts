@@ -16,7 +16,7 @@ export class ChaeriStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: ChaeriStackProps) {
         super(scope, id, props);
 
-        const provider = new GithubActionsIdentityProvider(this, "GithubProvider");
+        const provider = GithubActionsIdentityProvider.fromAccount(this, "GithubProvider");
 
         const instanceUser = new iam.User(this, "OracleCodeDeployInstanceUser");
 
