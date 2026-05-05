@@ -2,6 +2,7 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "importHelpers": true,
+        "rootDir": "./lib/",
         "outDir": "./dist/",
         "typeRoots": ["./node_modules/@types"],
         "types": ["node"]
