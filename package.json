@@ -1,6 +1,6 @@
 {
     "name": "chaeri",
-    "version": "0.2.8",
+    "version": "0.3.0",
     "files": [
         "dist/**",
         "lib/**"
@@ -28,7 +28,7 @@
         "typescript-eslint": "^8.66.0"
     },
     "dependencies": {
-        "aws-cdk-github-oidc": "^4.2.5",
+        "@blimmer/cdk-github-oidc": "^1.2.0",
         "aws-cdk-lib": "^2.263.0",
         "constructs": "^10.8.1",
         "ts-node": "^10.9.2",

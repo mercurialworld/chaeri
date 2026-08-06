@@ -1,6 +1,6 @@
 import { GitHubRepository } from "./types";
 
-export function getRepoFromEnv(): GitHubRepository {
+export function getRepoFromEnv(withId: boolean): GitHubRepository {
     const repoName = process.env.GITHUB_REPOSITORY;
 
     if (repoName === undefined) {
@@ -10,6 +10,13 @@ export function getRepoFromEnv(): GitHubRepository {
     }
 
     const [owner, repo] = repoName.split("/");
+    let ownerId = null;
+    let repoId = null;
 
-    return { owner, repo };
+    if (withId) {
+        ownerId = process.env.GITHUB_REPOSITORY_OWNER_ID
+        repoId = process.env.GITHUB_REPOSITORY_ID     
+    }
+
+    return { owner, repo, ownerId, repoId };
 }

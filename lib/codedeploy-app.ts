@@ -3,9 +3,10 @@ import * as codedeploy from "aws-cdk-lib/aws-codedeploy";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import {
+    EnvironmentFilter,
     GithubActionsIdentityProvider,
     GithubActionsRole,
-} from "aws-cdk-github-oidc";
+} from "@blimmer/cdk-github-oidc";
 import { GitHubRepository } from "./types";
 import * as cdk from "aws-cdk-lib";
 
@@ -40,10 +41,9 @@ export class CodeDeployApp extends Construct {
 
         // GH Actions
 
-        const oidcProxy = GithubActionsIdentityProvider.fromAccount(
-            this,
-            "GithubOIDCProviderProxy",
-        );
+        const oidcProxy = GithubActionsIdentityProvider.fromAccount(this, {
+            account: "GithubOIDCProviderProxy",
+        });
 
         const artifactsBucketProxy = s3.Bucket.fromBucketName(
             this,
@@ -52,10 +52,16 @@ export class CodeDeployApp extends Construct {
         );
 
         const actionsRole = new GithubActionsRole(this, "ActionsCodeDeployRole", {
-            owner: props.githubRepo.owner,
-            repo: props.githubRepo.repo,
             provider: oidcProxy,
-            filter: `environment:${props.codedeployGitHubEnv}`,
+            subjectFilters: [
+                new EnvironmentFilter({
+                    owner: props.githubRepo.owner,
+                    ownerId: props.githubRepo.ownerId ?? undefined,
+                    repository: props.githubRepo.repo,
+                    repositoryId: props.githubRepo.repoId ?? undefined,
+                    environment: props.codedeployGitHubEnv,
+                }),
+            ],
         });
 
         artifactsBucketProxy.grantReadWrite(actionsRole);

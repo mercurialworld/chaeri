@@ -3,9 +3,11 @@ import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 import {
+    BranchFilter,
+    EnvironmentFilter,
     GithubActionsIdentityProvider,
     GithubActionsRole,
-} from "aws-cdk-github-oidc";
+} from "@blimmer/cdk-github-oidc";
 import { GitHubEnvRepository } from "./types";
 
 interface ChaeriStackProps extends cdk.StackProps {
@@ -37,16 +39,20 @@ export class ChaeriStack extends cdk.Stack {
             `arn:aws:iam::${this.account}:role/cdk-*`,
         );
 
-        props.repos.forEach(({ owner, repo, githubEnv }) => {
+        props.repos.forEach((r) => {
             const role = new GithubActionsRole(
                 this,
-                `ActionsCDKRole/${owner}/${repo}`,
+                `ActionsCDKRole/${r.owner}/${r.repo}`,
                 {
                     provider,
-                    owner,
-                    repo,
-                    filter: `environment:${githubEnv}`,
-                    roleName: `ActionsCDK@${owner}+${repo}`,
+                    roleName: `ActionsCDK@${r.owner}+${r.repo}`,
+                    subjectFilters: [ new EnvironmentFilter({
+                        owner: r.owner,
+                        ownerId: r.ownerId ?? undefined,
+                        repository: r.repo,
+                        repositoryId: r.repoId ?? undefined,
+                        environment: r.githubEnv
+                    })]
                 },
             );
             cdkRoleProxy.grantAssumeRole(role);
