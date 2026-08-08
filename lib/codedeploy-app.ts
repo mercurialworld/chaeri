@@ -41,9 +41,7 @@ export class CodeDeployApp extends Construct {
 
         // GH Actions
 
-        const oidcProxy = GithubActionsIdentityProvider.fromAccount(this, {
-            account: "GithubOIDCProviderProxy",
-        });
+        const oidcProxy = GithubActionsIdentityProvider.fromAccount(this);
 
         const artifactsBucketProxy = s3.Bucket.fromBucketName(
             this,
