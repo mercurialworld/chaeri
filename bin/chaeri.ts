@@ -13,4 +13,5 @@ new ChaeriStack(app, "ChaeriStack", {
         { owner: "mercurialworld", repo: "pochamoe-api", githubEnv: "aws-cdk" },
         { owner: "mercurialworld", ownerId: "187000350", repo: "drm-beatsaver-cacher", repoId: "1117195284", githubEnv: "aws-cdk"}
     ],
+    servers: ["Oracle", "Mercurial"],
 });
